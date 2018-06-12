@@ -21,7 +21,9 @@ namespace gpr {
     }
 
     T next() {
-      return s[i];
+      T _t(s.back());
+      s.pop_back(); // remove back most element
+      return _t;
     }
 
     int chars_left() const {
