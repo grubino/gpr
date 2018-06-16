@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <streambuf>
+#include <cstring>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ namespace gpr {
   struct parse_stream {
     size_t i;
     vector<T> s;
+    static vector<unsigned char> zeroes = vector<unsigned char>(sizeof(T), '\0');
 
     template<typename R>
     parse_stream<T>(R v) : s(v.begin(), v.end()) {
@@ -22,6 +24,7 @@ namespace gpr {
 
     T next() {
       T _t(s.back());
+      std::memcpy(&s.data(), zeroes.data(), s.size() * sizeof(T));
       s.pop_back(); // remove back most element
       return _t;
     }
